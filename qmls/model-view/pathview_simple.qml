@@ -30,13 +30,10 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent;
                     onClicked: {
-                        console.log("clicked, ", index, " count-", wrapper.PathView.view.count);
-                        wrapper.PathView.currentIndex = index;
+                        wrapper.PathView.view.currentIndex = index;
                     }
                 }                
-            }   
-            
-                         
+            }            
         }
     }
     

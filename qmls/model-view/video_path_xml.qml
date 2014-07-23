@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.XmlListModel 2.0
 import QtQuick.Layouts 1.1
+import QtQuick.Controls.Styles 1.1 
 
 Rectangle {
     width: 600;
@@ -38,12 +39,7 @@ Rectangle {
             width: 100;
             z: PathView.zOrder;
             scale: PathView.isCurrentItem ? 1.2 : PathView.itemScale;
-            opacity: PathView.itemAlpha;
-            
-            MouseArea {
-                anchors.fill: parent;
-                onClicked: wrapper.PathView.currentIndex = index;
-            }          
+            opacity: PathView.itemAlpha;         
             
             Image {
                 anchors.top: parent.top;
@@ -54,6 +50,10 @@ Rectangle {
                 width: 100;
                 height: 150;
                 fillMode: Image.PreserveAspectFit;
+                MouseArea {
+                    anchors.fill: parent;
+                    onClicked: wrapper.PathView.view.currentIndex = index;
+                }                 
             }   
              
             Canvas {
@@ -99,10 +99,61 @@ Rectangle {
         }
     }
     
+    Path {
+        id: linePath;
+        startX: 50; 
+        startY: 0;
+        PathAttribute { name: "zOrder"; value: 0 }
+        PathAttribute { name: "itemScale"; value: 0.3 }
+        PathAttribute { name: "itemAlpha"; value: 0.4 }
+        PathLine {
+            x: root.width /2;
+            y: root.height - 250;
+        }         
+        PathAttribute { name: "zOrder"; value: 100 }
+        PathAttribute { name: "itemScale"; value: 1.0 }        
+        PathAttribute { name: "itemAlpha"; value: 1.0 }        
+        PathLine {
+            x: root.width - 50;
+            y: 0;
+        }
+        PathAttribute { name: "zOrder"; value: 0 }
+        PathAttribute { name: "itemScale"; value: 0.3 }
+        PathAttribute { name: "itemAlpha"; value: 0.4 }
+    }
+    
+    Path {
+        id: arcPath;
+        startX: 300;
+        startY: 20;
+        PathAttribute { name: "zOrder"; value: 0 }
+        PathAttribute { name: "itemScale"; value: 0.3 }
+        PathAttribute { name: "itemAlpha"; value: 0.4 }        
+        PathArc {
+            x: 300;
+            y: 140;
+            radiusX: 220;
+            radiusY: 60;
+        }
+        PathAttribute { name: "zOrder"; value: 100 }
+        PathAttribute { name: "itemScale"; value: 1.0 }        
+        PathAttribute { name: "itemAlpha"; value: 1.0 }          
+        PathArc {
+            x: 300;
+            y: 20;
+            radiusX: 220;
+            radiusY: 60;
+        }    
+        PathAttribute { name: "zOrder"; value: 0 }
+        PathAttribute { name: "itemScale"; value: 0.3 }
+        PathAttribute { name: "itemAlpha"; value: 0.4 }         
+    }
+    
     PathView {
         id: videoView;
+        z: 1;
         anchors.fill: parent;
-        pathItemCount: 9;
+        pathItemCount: 11;
         // keep highlight sit on the middle of Path
         preferredHighlightBegin: 0.5;
         preferredHighlightEnd: 0.5;
@@ -110,47 +161,117 @@ Rectangle {
 
         delegate: videoDelegate;
         model: videoModel.createObject(videoView);
+        path: arcPath;
 
-        path:Path {
-            startX: 50; 
-            startY: 0;
-            PathAttribute { name: "zOrder"; value: 0 }
-            PathAttribute { name: "itemScale"; value: 0.3 }
-            PathAttribute { name: "itemAlpha"; value: 0.4 }
-            PathLine {
-                x: root.width /2;
-                y: root.height - 250;
-            }         
-            PathAttribute { name: "zOrder"; value: 100 }
-            PathAttribute { name: "itemScale"; value: 1.0 }        
-            PathAttribute { name: "itemAlpha"; value: 1.0 }        
-            PathLine {
-                x: root.width - 50;
-                y: 0;
+        states:[
+            State {
+                name: "hide";
+                PropertyChanges{
+                    target: videoView;
+                    restoreEntryValues: false;
+                    opacity: 0;
+                }
+            },
+            State {
+                name: "show";
+                PropertyChanges{
+                    target: videoView;
+                    restoreEntryValues: false;
+                    opacity: 1;
+                    visible: true;
+                    focus: true;
+                }
             }
-            PathAttribute { name: "zOrder"; value: 0 }
-            PathAttribute { name: "itemScale"; value: 0.3 }
-            PathAttribute { name: "itemAlpha"; value: 0.4 }
-        }
-
+        ]
+        state: "show";
+        transitions: [
+            Transition {
+                from: "hide";
+                to: "show";
+                NumberAnimation { 
+                    properties: "opacity"; 
+                    duration: 800; 
+                }
+            },
+            Transition {
+                from: "show";
+                to: "hide";
+                SequentialAnimation {
+                    NumberAnimation { 
+                        properties: "opacity"; 
+                        duration: 800; 
+                    }
+                    PropertyAction {
+                        property: "visible";
+                        value: false;
+                    }
+                }                
+            }
+        ] 
+        
         focus: true;
         Keys.onLeftPressed: decrementCurrentIndex();
         Keys.onRightPressed: incrementCurrentIndex();
         Keys.onReturnPressed: {
-            console.log("onReturnPressed, ", currentIndex);
+            //console.log("onReturnPressed, ", currentIndex);
             detail.setDetail(model.get(currentIndex));
-            detail.visible = true;
-            detail.focus = true;
-            visible = false;
+            detail.state = "show";
+            state = "hide";
         }
     }
-    
 
     Rectangle {
         id: detail;
         visible: false;
         anchors.fill: parent;
         color: "black";
+        z: 2; 
+        states:[
+            State {
+                name: "hide";
+                PropertyChanges{
+                    target: detail;
+                    restoreEntryValues: false;
+                    opacity: 0;
+                }
+            },
+            State {
+                name: "show";
+                PropertyChanges{
+                    target: detail;
+                    restoreEntryValues: false;
+                    opacity: 1;
+                    visible: true;
+                    focus: true;
+                }
+            }
+        ]
+        state: "hide";
+        transitions: [
+            Transition {
+                from: "hide";
+                to: "show";
+                NumberAnimation { 
+                    properties: "opacity"; 
+                    duration: 800; 
+                }           
+            },
+            Transition {
+                from: "show";
+                to: "hide";
+                SequentialAnimation {
+                    NumberAnimation { 
+                        properties: "opacity"; 
+                        duration: 800; 
+                    }
+                    PropertyAction {
+                        property: "visible";
+                        value: false;
+                    }
+                }                
+            }
+        ]        
+        
         Text {
             id: vName;
             x: 10;
@@ -159,7 +280,7 @@ Rectangle {
             width: parent.width - 20;
             font.bold: true;
             font.pixelSize: 28;
-            color: "white";
+            color: "blue";
         }
         Image {
             id: vPoster;
@@ -183,7 +304,7 @@ Rectangle {
                 Layout.fillWidth: true;
                 font.pixelSize: 18;
                 elide: Text.ElideRight;
-                color: "white";
+                color: "blue";
             }              
             Text { 
                 id: actor;
@@ -213,7 +334,15 @@ Rectangle {
                 font.pixelSize: 18;
                 elide: Text.ElideRight;
                 color: "white";
-            }                       
+            }     
+            
+            Text {
+                Layout.fillWidth: true;
+                text: "Sorry, play is not supported yet.";
+                color: "gray";
+                font.pixelSize: 16;
+                elide: Text.ElideRight;
+            }
         }        
         
         ColumnLayout {
@@ -260,9 +389,8 @@ Rectangle {
             case Qt.Key_Escape:
             case Qt.Key_Home:
                 event.accepted = true;
-                visible = false;
-                videoView.visible = true;
-                videoView.focus = true;
+                state = "hide";
+                videoView.state = "show";
                 break;
             }
         }
