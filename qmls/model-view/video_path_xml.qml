@@ -1,10 +1,11 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.XmlListModel 2.0
+import QtQuick.Layouts 1.1
 
 Rectangle {
     width: 600;
-    height: 360;
+    height: 400;
     color: "black";
     id: root;
     
@@ -21,8 +22,11 @@ Rectangle {
            XmlRole{ name: "director"; query: "attr[1]/string()"; }  
            XmlRole{ name: "actor_tag"; query: "attr[2]/@tag/string()"; }     
            XmlRole{ name: "actor"; query: "attr[2]/string()"; }    
-           XmlRole{ name: "rating"; query: "attr[3]/number()"; }     
+           XmlRole{ name: "rating_tag"; query: "attr[3]/@tag/string()"; }
+           XmlRole{ name: "rating"; query: "attr[3]/number()"; }   
+           XmlRole{ name: "desc_tag"; query: "attr[4]/@tag/string()"; }  
            XmlRole{ name: "desc"; query: "attr[4]/string()"; }  
+           XmlRole{ name: "playtimes_tag"; query: "playtimes/@tag/string()"; }   
            XmlRole{ name: "playtimes"; query: "playtimes/number()"; }                                             
         }
     }
@@ -129,31 +133,138 @@ Rectangle {
             PathAttribute { name: "itemAlpha"; value: 0.4 }
         }
 
-        
-        /*
-        highlight: Canvas {
-            //visible: false;
-            width: 112;
-            height: 162;
-            onPaint: {
-                console.log("x=", x, " y=", y, " w=", width, " h=", height);
-                var ctx = getContext("2d");
-                ctx.lineWidth = 6;
-                ctx.strokeStyle = "white";
-                ctx.beginPath();
-                ctx.moveTo(3, 3);
-                ctx.lineTo(109, 3);
-                ctx.lineTo(109, 158);
-                ctx.lineTo(3, 158);
-                ctx.lineTo(3, 3);
-                ctx.stroke();
-            }
-            z: 200;
-        }
-        */
-        
         focus: true;
         Keys.onLeftPressed: decrementCurrentIndex();
         Keys.onRightPressed: incrementCurrentIndex();
+        Keys.onReturnPressed: {
+            console.log("onReturnPressed, ", currentIndex);
+            detail.setDetail(model.get(currentIndex));
+            detail.visible = true;
+            detail.focus = true;
+            visible = false;
+        }
     }
+    
+
+    Rectangle {
+        id: detail;
+        visible: false;
+        anchors.fill: parent;
+        color: "black";
+        Text {
+            id: vName;
+            x: 10;
+            y: 10;
+            height: 32;
+            width: parent.width - 20;
+            font.bold: true;
+            font.pixelSize: 28;
+            color: "white";
+        }
+        Image {
+            id: vPoster;
+            anchors.left: vName.left;
+            anchors.top: vName.bottom;
+            anchors.topMargin: 4;
+            width: 160;
+            height: 240;
+            fillMode: Image.PreserveAspectFit;
+        }
+        
+        ColumnLayout {
+            anchors.left: vPoster.right;
+            anchors.leftMargin: 4;
+            anchors.right: vName.right;
+            anchors.top: vPoster.top;
+            height: vPoster.height;
+            spacing: 2;
+            Text { 
+                id: date
+                Layout.fillWidth: true;
+                font.pixelSize: 18;
+                elide: Text.ElideRight;
+                color: "white";
+            }              
+            Text { 
+                id: actor;
+                Layout.fillWidth: true;
+                font.pixelSize: 18;
+                elide: Text.ElideRight;
+                color: "white";
+            }
+            Text { 
+                id: director;
+                Layout.fillWidth: true;
+                font.pixelSize: 18;
+                elide: Text.ElideRight;
+                color: "white";
+            }   
+            Text { 
+                id: rating;
+                Layout.fillWidth: true;
+                font.pixelSize: 18;
+                elide: Text.ElideRight;
+                color: "white";
+            }                                 
+            Text { 
+                id: playtimes;
+                Layout.fillWidth: true;
+                Layout.fillHeight: true;
+                font.pixelSize: 18;
+                elide: Text.ElideRight;
+                color: "white";
+            }                       
+        }        
+        
+        ColumnLayout {
+            anchors.left: vPoster.left;
+            anchors.right: vName.right;
+            anchors.top: vPoster.bottom;
+            anchors.topMargin: 10;
+            anchors.bottom: parent.bottom;
+            anchors.bottomMargin: 4;
+            spacing: 2;
+            Text { 
+                id: descTitle;
+                Layout.fillWidth: true;
+                font.pixelSize: 18;
+                font.bold: true;
+                color: "white";
+            }
+            Text { 
+                id: description;
+                Layout.fillHeight: true;
+                Layout.fillWidth: true;
+                font.pixelSize: 16;
+                wrapMode: Text.Wrap;
+                maximumLineCount: 3;
+                elide: Text.ElideRight;
+                color: "white";
+            }           
+        }
+        
+        function setDetail(obj) {
+            vName.text = obj.name;
+            vPoster.source = obj.img;
+            date.text = obj.date;
+            actor.text = obj.actor_tag + ": " + obj.actor;
+            director.text = obj.director_tag + ": " + obj.director;
+            descTitle.text = obj.desc_tag + ":";
+            description.text = obj.desc;
+            rating.text = obj.rating_tag + ": " + obj.rating;
+            playtimes.text = obj.playtimes_tag + ":" + obj.playtimes;
+        }
+        Keys.onPressed: {
+            switch(event.key){
+            case Qt.Key_Back:
+            case Qt.Key_Escape:
+            case Qt.Key_Home:
+                event.accepted = true;
+                visible = false;
+                videoView.visible = true;
+                videoView.focus = true;
+                break;
+            }
+        }
+    }    
 }
