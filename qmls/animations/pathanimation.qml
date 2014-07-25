@@ -9,7 +9,7 @@ Canvas {
         ctx.lineWidth = 4;
         ctx.strokeStyle = "red";
         ctx.beginPath();
-        ctx.arc(200, 0, 160, 360, 50, false);
+        ctx.arc(200, 0, 160, Math.PI * 2, 0, false);
         ctx.stroke();
     }
 
@@ -18,7 +18,7 @@ Canvas {
         width: 40; 
         height: 40;
         color: "blue";
-        x: 40;
+        x: 20;
         y: 0;
         
         MouseArea {
@@ -31,7 +31,7 @@ Canvas {
             id: pathAnim; 
             target: rect;
             duration: 6000;
-            anchorPoint: "20,0";
+            anchorPoint: "20,20";
             orientationEntryDuration: 200;
             orientationExitDuration: 200;
             easing.type: Easing.InOutCubic;
