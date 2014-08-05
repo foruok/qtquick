@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
 
 Rectangle {
     width: 360;
@@ -20,29 +19,25 @@ Rectangle {
         centerText.color = clr;
     }
     
-    GridLayout {
+    Grid {
         anchors.left: parent.left;
         anchors.leftMargin: 4;
         anchors.bottom: parent.bottom;
         anchors.bottomMargin: 4;
-        width: 300;
         rows: 3;
         columns: 3;
         rowSpacing: 4;
         columnSpacing: 4;
-        flow: GridLayout.TopToBottom;
+        flow: Grid.TopToBottom;
         
         ColorPicker {
             color: Qt.rgba(Math.random(), Math.random(), Math.random(), 1.0);
             onColorPicked: setTextColor(clr);
-            Layout.columnSpan: 3;
-            Layout.rowSpan: 3;
         }
         
         ColorPicker {
             color: Qt.rgba(Math.random(), Math.random(), Math.random(), 1.0);     
             onColorPicked: setTextColor(clr);
-            Layout.fillWidth: true;
         }
         
         ColorPicker {

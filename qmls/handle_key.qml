@@ -3,7 +3,7 @@ import QtQuick.Controls 1.1
 
 Rectangle {
     width: 320;
-    height: 480;
+    height: 280;
     color: "gray";
     
     focus: true;

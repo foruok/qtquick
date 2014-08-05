@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
+import QtQuick.Layouts 1.1  //[1]
 
 Rectangle {
     width: 360;
@@ -19,30 +20,32 @@ Rectangle {
         centerText.color = clr;
     }
     
-    Column {
+    ColumnLayout { //[2]
         anchors.left: parent.left;
         anchors.leftMargin: 4;
         anchors.bottom: parent.bottom;
         anchors.bottomMargin: 4;
+        height: 180; //[3]
         spacing: 4;
         
         ColorPicker {
-            color: Qt.rgba(Math.random(), Math.random(), Math.random(), 1.0);
+            color: Qt.rgba(Math.random(), Math.random(), Math.random());
+            onColorPicked: setTextColor(clr);
+            Layout.fillHeight: true; //[4]
+        }
+        
+        ColorPicker {
+            color: Qt.rgba(Math.random(), Math.random(), Math.random());     
             onColorPicked: setTextColor(clr);
         }
         
         ColorPicker {
-            color: Qt.rgba(Math.random(), Math.random(), Math.random(), 1.0);     
+            color: Qt.rgba(Math.random(), Math.random(), Math.random());
             onColorPicked: setTextColor(clr);
         }
         
         ColorPicker {
-            color: Qt.rgba(Math.random(), Math.random(), Math.random(), 1.0);
-            onColorPicked: setTextColor(clr);
-        }
-        
-        ColorPicker {
-            color: Qt.rgba(Math.random(), Math.random(), Math.random(), 1.0);
+            color: Qt.rgba(Math.random(), Math.random(), Math.random());
             onColorPicked: setTextColor(clr);     
         }
     }

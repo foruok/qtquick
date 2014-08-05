@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
+import QtQuick.Layouts 1.1 
 
 Rectangle {
     width: 360;
@@ -19,11 +20,13 @@ Rectangle {
         centerText.color = clr;
     }
     
-    Row {
+    RowLayout {
         anchors.left: parent.left;
         anchors.leftMargin: 4;
         anchors.bottom: parent.bottom;
         anchors.bottomMargin: 4;
+        anchors.right: parent.right;
+        anchors.rightMargin: 4;
         spacing: 4;
         
         ColorPicker {
@@ -44,6 +47,7 @@ Rectangle {
         ColorPicker {
             color: Qt.rgba(Math.random(), Math.random(), Math.random(), 1.0);
             onColorPicked: setTextColor(clr);     
+            Layout.fillWidth: true;
         }
     }
 }
