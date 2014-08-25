@@ -1,13 +1,14 @@
 #include <QtGui/QGuiApplication>
-#include "qtquick2applicationviewer.h"
+#include <QtQuick/QQuickView>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    QtQuick2ApplicationViewer viewer;
-    viewer.setMainQmlFile(QStringLiteral("qml/pinchArea/main.qml"));
-    viewer.showExpanded();
+    QQuickView viewer;
+    viewer.setResizeMode(QQuickView::SizeRootObjectToView);
+    viewer.setSource(QUrl("qrc:///main.qml"));
+    viewer.show();
 
     return app.exec();
 }
