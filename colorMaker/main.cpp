@@ -1,5 +1,5 @@
 #include <QtGui/QGuiApplication>
-#include "qtquick2applicationviewer.h"
+#include <QtQuick/QQuickView>
 #include <QtQml>
 #include "colorMaker.h"
 
@@ -9,10 +9,11 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     //qmlRegisterType<ColorMaker>("an.qt.ColorMaker", 1, 0, "ColorMaker");
 
-    QtQuick2ApplicationViewer viewer;
+    QQuickView viewer;
+    viewer.setResizeMode(QQuickView::SizeRootObjectToView);
     viewer.rootContext()->setContextProperty("colorMaker", new ColorMaker);
-    viewer.setMainQmlFile(QStringLiteral("qml/colorMaker/main.qml"));
-    viewer.showExpanded();
+    viewer.setSource(QUrl("qrc:///main.qml"));
+    viewer.show();
 
     return app.exec();
 }

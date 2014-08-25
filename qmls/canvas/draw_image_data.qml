@@ -26,7 +26,7 @@ Rectangle {
     
     Canvas {
         id: imageCanvas;
-        property var poster: "http://image.new-more.com/2012/0312/20120312164600100.jpg";
+        property var poster: "http://p.qq181.com/cms/1210/2012100413195471481.jpg";
         anchors.left: parent.left;
         anchors.top: randomImageData.bottom;
         anchors.topMargin: 20;

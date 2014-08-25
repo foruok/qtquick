@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>videos.xml</file>
+        <file>res/ic_search.png</file>
+        <file>res/ic_media_play.png</file>
+        <file>res/ic_media_play_focus.png</file>
     </qresource>
 </RCC>

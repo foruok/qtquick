@@ -1,5 +1,19 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>ImageDigger.qml</file>
+        <file>LocalViewer.qml</file>
+        <file>icons/ic_archive.png</file>
+        <file>icons/ic_find.png</file>
+        <file>icons/ic_search.png</file>
+        <file>FlatButton.qml</file>
+        <file>icons/ic_backward.png</file>
+        <file>icons/ic_forward.png</file>
+        <file>icons/ic_zoomin.png</file>
+        <file>icons/ic_zoomout.png</file>
+        <file>icons/ic_back.png</file>
+        <file>icons/ic_rotate_left.png</file>
+        <file>icons/ic_rotate_right.png</file>
+        <file>imageviewer_zh_CN.qm</file>
     </qresource>
 </RCC>

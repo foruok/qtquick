@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
+//[1]
+//import an.qt.ColorMaker 1.0
 
 Rectangle {
     width: 360;
@@ -12,6 +14,12 @@ Rectangle {
         anchors.topMargin: 4;
         font.pixelSize: 26;
     }
+    /* [2]
+    ColorMaker {
+        id: colorMaker;
+        color: Qt.green;
+    }
+    */
 
     Rectangle {
         id: colorRect;
@@ -42,6 +50,28 @@ Rectangle {
             colorMaker.stop();
         }
     }
+
+    function changeAlgorithm(button, algorithm){
+        switch(algorithm)
+        {
+        case 0:
+            button.text = "RandomRGB";
+            break;
+        case 1:
+            button.text = "RandomRed";
+            break;
+        case 2:
+            button.text = "RandomGreen";
+            break;
+        case 3:
+            button.text = "RandomBlue";
+            break;
+        case 4:
+            button.text = "LinearIncrease";
+            break;
+        }
+    }
+
     Button {
         id: colorAlgorithm;
         text: "RandomRGB";
@@ -50,24 +80,7 @@ Rectangle {
         anchors.bottom: start.bottom;
         onClicked: {
             var algorithm = (colorMaker.algorithm() + 1) % 5;
-            switch(algorithm)
-            {
-            case 0:
-                text = "RandomRGB";
-                break;
-            case 1:
-                text = "RandomRed";
-                break;
-            case 2:
-                text = "RandomGreen";
-                break;
-            case 3:
-                text = "RandomBlue";
-                break;
-            case 4:
-                text = "LinearIncrease";
-                break;
-            }
+            changeAlgorithm(colorAlgorithm, algorithm);
             colorMaker.setAlgorithm(algorithm);
         }
     }
@@ -82,9 +95,13 @@ Rectangle {
             Qt.quit();
         }
     }
+
     Component.onCompleted: {
         colorMaker.color = Qt.rgba(0,180,120, 255);
+        //[3]
+        //colorMaker.setAlgorithm(ColorMaker.LinearIncrease);
         colorMaker.setAlgorithm(2);
+        changeAlgorithm(colorAlgorithm, colorMaker.algorithm());
     }
 
     Connections {

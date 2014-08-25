@@ -19,9 +19,17 @@ void ProbeVideoPrivate::probe(QString pageUrl)
 {
     qDebug() << "ProbeVideoPrivate::probe - " << pageUrl;
     abort();
+    m_urls.clear();
     //TODO: create flvxz.com url
-    QUrl url(pageUrl);
-    QNetworkRequest req(url);
+    QByteArray baUrl = pageUrl.toLatin1();
+    char *data = baUrl.data();
+    data[5] = '#';
+    data[6] = '#';
+    QByteArray base64 = baUrl.toBase64();
+    QString strUrl = QString("http://api.flvxz.com/url/%1").arg(base64.data());
+    qDebug() << "base64 - " << strUrl;
+    QUrl qurl(strUrl);
+    QNetworkRequest req(qurl);
     m_reply = m_nam.get(req);
     connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)),
             this, SLOT(onEror(QNetworkReply::NetworkError)));
@@ -41,6 +49,7 @@ void ProbeVideoPrivate::abort()
 
 void ProbeVideoPrivate::onEror(QNetworkReply::NetworkError code)
 {
+    qDebug() << "onError";
     m_reply->disconnect(this);
     m_reply->deleteLater();
     m_reply = 0;
@@ -48,6 +57,7 @@ void ProbeVideoPrivate::onEror(QNetworkReply::NetworkError code)
 
 void ProbeVideoPrivate::onFinished()
 {
+    qDebug() << "onFinished";
     int status = m_reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     if(status != 200)
     {
@@ -84,10 +94,7 @@ void ProbeVideoPrivate::onFinished()
                             qDebug() << m3u8Url;
                             m_urls.append(m3u8Url);
                         }
-                        else
-                        {
-                            break;
-                        }
+                        break;
                     }
                 }
             }
@@ -96,6 +103,8 @@ void ProbeVideoPrivate::onFinished()
     if(reader.hasError())
     {
     }
+
+    emit m_pv->probeFinished(m_urls.size() > 0);
 
     m_reply->disconnect(this);
     m_reply->deleteLater();

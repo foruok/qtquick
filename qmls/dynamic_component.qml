@@ -27,7 +27,7 @@ Rectangle {
         
         onClicked:{
            if(rootItem.colorPickerShow){
-               redLoader.source = "";
+               redLoader.sourceComponent = undefined;
                blueLoader.source = "";
                rootItem.colorPickerShow = false;
                ctrlButton.text = "Show";
