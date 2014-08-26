@@ -2,10 +2,7 @@ TEMPLATE = app
 
 QT += qml quick
 
-SOURCES += main.cpp \
-    networkImageModel.cpp \
-    directoryTraverse.cpp \
-    ../../stockMonitor/qDebug2Logcat.cpp
+SOURCES += main.cpp
 
 RESOURCES += qml.qrc
 
@@ -19,11 +16,3 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 OTHER_FILES += \
     android/AndroidManifest.xml
-
-HEADERS += \
-    networkImageModel.h \
-    networkImageModel_p.h \
-    directoryTraverse.h \
-    ../../stockMonitor/qDebug2Logcat.h
-
-TRANSLATIONS += imageviewer_zh_CN.ts

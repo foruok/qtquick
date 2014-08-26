@@ -11,6 +11,7 @@ Window {
     height: 480;
     minimumWidth: 800;
     minimumHeight: 480;
+    objectName: "qmlWin";
     color: "black";
     title: qsTr("ImageViewer");
 
@@ -18,6 +19,18 @@ Window {
     property var localView;
     property var netComp;
     property var netView;
+
+    function backKeyProcess(){
+        if(root.localView != undefined){
+            root.localView.destroy();
+            root.localView = undefined;
+        }else if(root.netView != undefined){
+            root.netView.destroy();
+            root.netView = undefined;
+        }else{
+            Qt.quit();
+        }
+    }
 
     Column {
         id: actionPanel;
@@ -31,7 +44,7 @@ Window {
             font.pointSize: 14;
             onClicked: {
                 if(root.netComp == undefined){
-                    root.netComp = Qt.createComponent("ImageDigger.qml");
+                    root.netComp = Qt.createComponent("ImageDigger.qml", Component.PreferSynchronous);
                 }
                 if(root.netView == undefined){
                     root.netView = root.netComp.createObject(root, {"focus": true});
@@ -46,10 +59,11 @@ Window {
             font.pointSize: 14;
             onClicked: {
                 if(root.localComp == undefined){
-                    root.localComp = Qt.createComponent("LocalViewer.qml");
+                    root.localComp = Qt.createComponent("LocalViewer.qml", Component.PreferSynchronous);
                 }
                 if(root.localView == undefined){
                     root.localView = root.localComp.createObject(root, {"focus": true});
+                    root.localView.initInteractive();
                     root.localView.back.connect(root.onLocalViewBack);
                 }
             }

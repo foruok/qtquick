@@ -29,11 +29,6 @@ Rectangle {
 
     Keys.onPressed: {
         switch(event.key){
-        case Qt.Key_Home:
-        case Qt.Key_Back:
-            event.accepted = true;
-            back();
-            break;
         case Qt.Key_Left:
         case Qt.Key_PageUp:
             event.accepted = true;
@@ -81,6 +76,24 @@ Rectangle {
                 busy.running = false;
                 stateLabel.visible = true;
                 stateLabel.text = qsTr("Unknow error when loading");
+            }
+        }
+
+        function zoomIn(){
+            var factor = scale;
+            if(factor < 1){
+                scale = factor + 0.25;
+            }else if(factor < 16){
+                scale = factor + 1;
+            }
+        }
+
+        function zoomOut(){
+            var factor = scale;
+            if(factor > 1){
+                scale = factor - 1;
+            }else if(factor > 0.25){
+                scale = factor - 0.25;
             }
         }
     }
@@ -137,27 +150,13 @@ Rectangle {
                 iconSource: "icons/ic_zoomin.png";
                 width: 50;
                 height: 50;
-                onClicked: {
-                    var factor = imageViewer.scale;
-                    if(factor < 1){
-                        imageViewer.scale = factor + 0.25;
-                    }else if(factor < 16){
-                        imageViewer.scale = factor + 1;
-                    }
-                }
+                onClicked: imageViewer.zoomIn();
             }
             FlatButton {
                 iconSource: "icons/ic_zoomout.png";
                 width: 50;
                 height: 50;
-                onClicked: {
-                    var factor = imageViewer.scale;
-                    if(factor > 1){
-                        imageViewer.scale = factor - 1;
-                    }else if(factor > 0.25){
-                        imageViewer.scale = factor - 0.25;
-                    }
-                }
+                onClicked: imageViewer.zoomOut();
             }
             FlatButton {
                 iconSource: "icons/ic_backward.png";
@@ -229,6 +228,14 @@ Rectangle {
                 }
             }
         ]
+
+        function toggleState(){
+            if( state == "show"){
+                state = "hide";
+            }else{
+                state = "show";
+            }
+        }
     }
 
     FileDialog {
@@ -254,7 +261,7 @@ Rectangle {
     }
 
     function onDirTraverseUpdated(){
-        dirTraverse.current = imagePath.text;
+        dirTraverse.current = Qt.resolvedUrl(imagePath.text);
         canNavigation = (dirTraverse.currentIndex >= 0 && dirTraverse.count() > 1);
         //console.log("onDirTraverseUpdated, ", dirTraverse.currentIndex);
     }
@@ -263,16 +270,83 @@ Rectangle {
         dirTraverse.updated.connect(onDirTraverseUpdated);
     }
 
-    MouseArea {
+    MultiPointTouchArea{
+        id: mpta;
         anchors.fill: parent;
-        onClicked: {
-            if( actionPanel.state == "show"){
-                actionPanel.state = "hide";
-            }else{
-                actionPanel.state = "show";
-            }
+        minimumTouchPoints: 1;
+        maximumTouchPoints: 2;
+        property int points: 0;
+        property bool bPinch: false;
+        onPressed: {
+            points += touchPoints.length;
+        }
 
+        onReleased: {
+            points -= touchPoints.length;
+            if(points < 0){
+                points = 0;
+            }
+            if(points == 0){
+                if(bPinch == false){
+                    var p = touchPoints[0];
+                    var offset = p.x - p.startX;
+                    if( offset >= 40 ){
+                        console.log("touch to right, go prev image");
+                        root.prev();
+                    }else if(offset <= -40){
+                        console.log("touch to right, go next image");
+                        root.next();
+                    }else{
+                        actionPanel.toggleState();
+                    }
+                }else{
+                    bPinch = false;
+                }
+            }
+        }
+
+        onUpdated: {
+            if(touchPoints.length == 2){
+                var p1 = touchPoints[0];
+                var p2 = touchPoints[1];
+                console.log("x-", p1.x, " startX-", p1.startX, " previousX-", p1.previousX);
+                console.log("2 x-", p2.x, " startX-", p2.startX, " previousX-", p2.previousX);
+                var prevDistance = Math.pow(p2.previousX - p1.previousX, 2) + Math.pow(p2.previousY - p1.previousY, 2);
+                var currentDistance = Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2);;
+                if(prevDistance < currentDistance){
+                    imageViewer.zoomIn();
+                }else{
+                    imageViewer.zoomOut();
+                }
+                bPinch = true;
+            }
+        }
+    }
+
+    MouseArea {
+        id: mousea;
+        anchors.fill: parent;
+        acceptedButtons: Qt.LeftButton|Qt.RightButton;
+        onClicked: {
+
+            if(mouse.button == Qt.LeftButton){
+                if( actionPanel.state == "show"){
+                    actionPanel.state = "hide";
+                }else{
+                    actionPanel.state = "show";
+                }
+            }else if(mouse.button == Qt.RightButton){
+                root.back();
+            }
             mouse.accepted = true;
+        }
+    }
+
+    function initInteractive(){
+        if(Qt.platform.os == "android"){
+            mousea.enabled = false;
+        }else{
+            mpta.enabled = false;
         }
     }
 }

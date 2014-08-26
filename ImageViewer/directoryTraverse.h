@@ -22,7 +22,7 @@ public:
     QStringList nameFilters() const { return m_nameFilters;  }
     void setNameFilters(QStringList nameFilters){ m_nameFilters = nameFilters; }
     QUrl current();
-    void setCurrent(QUrl fileName);
+    void setCurrent(QUrl url);
     int currentIndex(){return m_nCurrent;}
 
     Q_INVOKABLE QList<QString> files(){ return m_files; }

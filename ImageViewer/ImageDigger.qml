@@ -9,14 +9,11 @@ Rectangle {
     anchors.fill: parent;
     color: "black";
     signal back();
-    Keys.onPressed: {
-        switch(event.key){
-        case Qt.Key_Home:
-        case Qt.Key_Back:
-            event.accepted = true;
-            back();
-            break;
-        }
+
+    MouseArea {
+        anchors.fill: parent;
+        acceptedButtons: Qt.RightButton;
+        onClicked: scene.back();
     }
 
     Path {
@@ -166,17 +163,6 @@ Rectangle {
             activeFocusOnTab: true;
             onAccepted: {
                 imageModel.keyword = encodeURIComponent(text);
-            }
-            Keys.onPressed: {
-                switch(event.key){
-                case Qt.Key_Home:
-                case Qt.Key_Back:
-                    event.accepted = true;
-                    scene.back();
-                    break;
-                default:
-                    break;
-                }
             }
         }
 

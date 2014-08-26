@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ic_android.png</file>
+        <file>ic_android_usb.png</file>
+        <file>ic_qt.png</file>
+    </qresource>
+</RCC>

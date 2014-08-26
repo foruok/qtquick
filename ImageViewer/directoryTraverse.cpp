@@ -116,7 +116,7 @@ void DirectoryTraverse::setFolder(QString strFolder)
 #else
     m_strFolder = strFolder.mid(7);
 #endif
-    qDebug() << "setFolder - " << m_strFolder;
+    //qDebug() << "setFolder - " << m_strFolder;
     m_currentRunnable = new DirectoryRunnable(this, m_strFolder, m_nameFilters);
     m_currentRunnable->setAutoDelete(false);
     QThreadPool::globalInstance()->start(m_currentRunnable);

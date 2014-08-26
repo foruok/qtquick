@@ -6,6 +6,8 @@ Rectangle {
     implicitHeight: 50;
     color: "transparent";
     property alias iconSource: icon.source;
+    property alias iconWidth: icon.width;
+    property alias iconHeight: icon.height;
     property alias textColor: btnText.color;
     property alias font: btnText.font;
     property alias text: btnText.text;
@@ -37,7 +39,10 @@ Rectangle {
         onExited: {
             bkgnd.hovered = false;
         }
-        onClicked: bkgnd.clicked();
+        onClicked: {
+            bkgnd.hovered = false;
+            bkgnd.clicked();
+        }
     }
 }
 
