@@ -85,7 +85,10 @@ void ProbeVideoPrivate::onFinished()
                     if(elementName == "furl")
                     {
                         m3u8Url = reader.readElementText();
+                        m_urls.append(m3u8Url);//暂时只取第一个地址
+                        break;
                     }
+                    /*
                     else if(elementName == "ftype")
                     {
                         QString type = reader.readElementText();
@@ -96,7 +99,9 @@ void ProbeVideoPrivate::onFinished()
                         }
                         break;
                     }
+                    */
                 }
+                break;
             }
         }
     }

@@ -37,5 +37,11 @@ Rectangle {
         }
         
         focus: true;
+        /*
+        Component.onCompleted: {
+            var col = Qt.createQmlObject("import QtQuick 2.0\nimport QtQuick.Controls 1.2\nTableViewColumn{ role: \"manufacturer\" ; title: \"Manufacturer\" ; width: 140; }", phoneModel);
+            phoneTable.addColumn( col );
+        }
+        */
     }
 }

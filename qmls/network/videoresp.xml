@@ -1,0 +1,10 @@
+<?xml version=\"1.0\" encoding=\"utf-8\"?>
+<videos id=\'10001\' token=\'AHDXCDN\' >
+  <video page=\'http://www.letv.com/ptv/vplay/1902138.html\' response=\'1\' resolution=\'1\' save=\'http://127.0.0.1/a.mp4\' name=\'\' >
+    <httpparams>
+      <user-agent>vlc-1.2</user-agent>
+      <refer></refer>
+      <cookie></cookie>
+    </httpparams>
+  </video>
+</videos>

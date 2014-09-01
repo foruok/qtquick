@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>res/ic_launcher_camera.png</file>
+        <file>res/ic_zoom_in.png</file>
+        <file>res/ic_zoom_out.png</file>
+        <file>res/control_bar.png</file>
+        <file>FlatButton.qml</file>
+        <file>res/ic_cam_shutter.png</file>
+        <file>res/ic_menu_stat_action.png</file>
+        <file>res/ic_menu_stat_auto.png</file>
+        <file>res/ic_menu_stat_flash.png</file>
+        <file>res/ic_menu_stat_flash_auto.png</file>
+        <file>res/ic_menu_stat_flash_off.png</file>
+        <file>res/ic_menu_stat_landscape.png</file>
+        <file>res/ic_menu_stat_night.png</file>
+        <file>res/ic_menu_stat_portrait.png</file>
+    </qresource>
+</RCC>

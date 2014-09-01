@@ -530,7 +530,7 @@ Window {
                 switch(playbackState){
                 case MediaPlayer.PlayingState:
                     if(loading.running == true) {
-                        console.log("Video Resolution:" , player.metaData.resolution);
+                        //console.log("Video Resolution:" , player.metaData.resolution);
                         loading.running = false;
                     }
                     break;

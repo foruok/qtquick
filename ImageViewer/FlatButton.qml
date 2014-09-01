@@ -27,7 +27,7 @@ Rectangle {
         anchors.left: icon.right;
         anchors.verticalCenter: icon.verticalCenter;
         anchors.margins: 4;
-        color: parent.hovered ? "blue" : "white";
+        color: ma.pressed ? "blue" : (parent.hovered ? "#0000a0" : "white");
     }
     MouseArea {
         id: ma;

@@ -14,12 +14,14 @@ Rectangle {
         anchors.topMargin: 4;
         font.pixelSize: 26;
     }
-    /* [2]
+    // [2]
+    /*
     ColorMaker {
         id: colorMaker;
         color: Qt.green;
     }
     */
+
 
     Rectangle {
         id: colorRect;
@@ -100,7 +102,7 @@ Rectangle {
         colorMaker.color = Qt.rgba(0,180,120, 255);
         //[3]
         //colorMaker.setAlgorithm(ColorMaker.LinearIncrease);
-        colorMaker.setAlgorithm(2);
+        colorMaker.setAlgorithm(colorMaker.RandomRGB);
         changeAlgorithm(colorAlgorithm, colorMaker.algorithm());
     }
 
