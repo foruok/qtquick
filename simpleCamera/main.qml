@@ -1,6 +1,6 @@
 import QtQuick 2.2
 import QtQuick.Window 2.1
-import QtMultimedia 5.0
+import QtMultimedia 5.2
 import QtQuick.Controls 1.1
 
 Window {
@@ -58,6 +58,7 @@ Window {
         source: camera;
         focus : visible;
         anchors.fill: parent;
+        autoOrientation: true;
     }
 
     Image {

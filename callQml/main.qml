@@ -1,10 +1,12 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.1
+import QtQuick 2.2
+import QtQuick.Controls 1.2
+import QtQuick.Window 2.0
 
-Rectangle {
-    objectName: "rootRect";
+Window {
+    objectName: "rootObject";
     width: 360;
     height: 360;
+    visible: true;
     Text {
         objectName: "textLabel";
         text: "Hello World";

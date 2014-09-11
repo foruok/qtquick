@@ -1,30 +1,46 @@
 #include <QtGui/QGuiApplication>
-#include <QtQuick/QQuickView>
-#include <QQuickItem>
+//#include <QtQuick/QQuickView>
+#include <QQmlApplicationEngine>
 #include "changeColor.h"
 #include <QMetaObject>
 #include <QDebug>
 #include <QColor>
 #include <QVariant>
+//#include <QtQml>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
+    /*
     QQuickView viewer;
     viewer.setResizeMode(QQuickView::SizeRootObjectToView);
     viewer.setSource(QUrl("qrc:///main.qml"));
     viewer.show();
+    */
+    QQmlApplicationEngine engine;
+    engine.load(QUrl("qrc:///main.qml"));
 
-    QQuickItem * rootItem = viewer.rootObject();
-    new ChangeQmlColor(rootItem);
-    QObject * quitButton = rootItem->findChild<QObject*>("quitButton");
+    QObject * root = NULL;//= qobject_cast<QObject*>(viewer.rootObject());
+    QList<QObject*> rootObjects = engine.rootObjects();
+    int count = rootObjects.size();
+    qDebug() << "rootObjects- " << count;
+    for(int i = 0; i < count; i++)
+    {
+        if(rootObjects.at(i)->objectName() == "rootObject")
+        {
+            root = rootObjects.at(i);
+            break;
+        }
+    }
+    new ChangeQmlColor(root);
+    QObject * quitButton = root->findChild<QObject*>("quitButton");
     if(quitButton)
     {
         QObject::connect(quitButton, SIGNAL(clicked()), &app, SLOT(quit()));
     }
 
-    QObject *textLabel = rootItem->findChild<QObject*>("textLabel");
+    QObject *textLabel = root->findChild<QObject*>("textLabel");
     if(textLabel)
     {
         //1. failed call

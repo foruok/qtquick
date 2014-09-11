@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>res/audioFile.png</file>
+        <file>res/ic_bkgndcolor.png</file>
+        <file>res/ic_fontsize1.png</file>
+        <file>res/ic_fontsize2.png</file>
+        <file>res/ic_textcolor.png</file>
+        <file>res/imageFile.png</file>
+        <file>res/txtFile.png</file>
+        <file>res/videoFile.png</file>
+        <file>res/eye.png</file>
+    </qresource>
+</RCC>
