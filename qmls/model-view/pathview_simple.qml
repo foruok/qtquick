@@ -1,5 +1,4 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.1
+import QtQuick 2.2
 
 Rectangle {
     width: 480;
@@ -47,7 +46,7 @@ Rectangle {
         preferredHighlightEnd: 0.5;
         highlightRangeMode: PathView.StrictlyEnforceRange;
         //snapMode: PathView.SnapToItem;
-        snapMode: PathView.SnapOneItem
+        snapMode: PathView.SnapOneItem;
 
         delegate: rectDelegate;
         model: 15;
@@ -55,16 +54,16 @@ Rectangle {
         path:Path {
             startX: 10; 
             startY: 100;
-            PathAttribute { name: "zOrder"; value: 0 }
-            PathAttribute { name: "itemAlpha"; value: 0.1 }
-            PathAttribute { name: "itemScale"; value: 0.6 }
+            PathAttribute { name: "zOrder"; value: 0; }
+            PathAttribute { name: "itemAlpha"; value: 0.1; }
+            PathAttribute { name: "itemScale"; value: 0.6; }
             PathLine {
                 x: root.width/2 - 40;
                 y: 100;
             }         
-            PathAttribute { name: "zOrder"; value: 10 } 
-            PathAttribute { name: "itemAlpha"; value: 0.8 }  
-            PathAttribute { name: "itemScale"; value: 1.2 }
+            PathAttribute { name: "zOrder"; value: 10; } 
+            PathAttribute { name: "itemAlpha"; value: 0.8; }  
+            PathAttribute { name: "itemScale"; value: 1.2; }
             //PathPercent { value: 0.28; }
             PathLine {
                 //x: root.width - 100;
@@ -72,9 +71,9 @@ Rectangle {
                 relativeX: root.width/2 - 60;
                 relativeY: 0;
             }
-            PathAttribute { name: "zOrder"; value: 0 }                            
-            PathAttribute { name: "itemAlpha"; value: 0.1 }
-            PathAttribute { name: "itemScale"; value: 0.6 }
+            PathAttribute { name: "zOrder"; value: 0; }                            
+            PathAttribute { name: "itemAlpha"; value: 0.1; }
+            PathAttribute { name: "itemScale"; value: 0.6; }
         }
 
         focus: true;

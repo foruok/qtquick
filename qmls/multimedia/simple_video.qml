@@ -6,7 +6,8 @@ Rectangle {
 
     MediaPlayer {
         id: player;
-        source: "e:/temp/media/m3u8_download.ts";
+        source: "D:/FavoriteVideo/Tom_Jerry_001.flv";
+        /*
         onError: {
             console.log(errorString);
         }
@@ -32,7 +33,7 @@ Rectangle {
             var mediaObj = mediaObject;
             mediaObj.metaDataChanged.connect(readMeta);            
         }  
-        
+        */
     }
     
     VideoOutput {

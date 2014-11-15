@@ -41,7 +41,8 @@ void ImageModelPrivate::search(const QString & keyword)
     STOP_TIMER();
 
     m_keyword = keyword;
-    QString strUrl = QString("http://image.baidu.com/i?tn=resultjsonavstar&ie=utf-8&word=%1&pn=0&rn=60").arg(keyword);
+    QString strUrl = QString("http://image.baidu.com/i?tn=baiduimagejson&ie=utf-8&ic=0&rn=60&pn=0&word=%1").arg(keyword);
+    //QString strUrl = QString("http://image.baidu.com/i?tn=resultjsonavstar&ie=utf-8&word=%1&pn=0&rn=60").arg(keyword);
     QUrl qurl(strUrl);
     QNetworkRequest req(qurl);
     m_reply = m_nam.get(req);

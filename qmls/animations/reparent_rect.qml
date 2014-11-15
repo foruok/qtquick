@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.2
 
 Rectangle {
     width: 360;
@@ -67,7 +67,7 @@ Rectangle {
                     height: 100;
                     x: blueRect.x + blueRect.width + 8;
                     y: blueRect.y;
-                    rotation: 60;
+                    //rotation: 60;
                 }
             }
         ]

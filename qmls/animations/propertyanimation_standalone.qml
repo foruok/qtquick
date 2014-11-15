@@ -1,4 +1,4 @@
-﻿import QtQuick 2.0
+﻿import QtQuick 2.2
 
 Rectangle {
     width: 360;
@@ -16,7 +16,9 @@ Rectangle {
         PropertyAnimation { 
             id: animation; 
             target: rect; 
-            property: "width"; to: 150; duration: 1000;
+            property: "width"; 
+            to: 150; 
+            duration: 1000;
         }
     
         MouseArea { 

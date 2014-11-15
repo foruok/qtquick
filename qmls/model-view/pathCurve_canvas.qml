@@ -1,17 +1,19 @@
-import QtQuick 2.0
+import QtQuick 2.2
 
 Canvas {
-    width: 400; height: 200
-    contextType: "2d"
+    width: 400;
+    height: 200;
+    contextType: "2d";
 
     Path {
-        id: myPath
-        startX: 4; startY: 100
+        id: myPath;
+        startX: 4; 
+        startY: 100;
 
-        PathCurve { x: 75; y: 75 }
-        PathCurve { x: 200; y: 150 }
-        PathCurve { x: 325; y: 25 }
-        PathCurve { x: 394; y: 100 }
+        PathCurve { x: 75; y: 75; }
+        PathCurve { x: 200; y: 150; }
+        PathCurve { x: 325; y: 25; }
+        PathCurve { x: 394; y: 100; }
     }
 
     onPaint: {

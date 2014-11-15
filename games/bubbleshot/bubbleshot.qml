@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.1
+import QtQuick 2.2
+import QtQuick.Controls 1.2
 
 Rectangle {
     width: 360;
@@ -17,7 +17,7 @@ Rectangle {
         
         Component.onCompleted: {
             var i = 0;
-            var qmlStringBegin = "import QtQuick 2.0; Image{width: 30; height:30; property var died: false; source: \"res/bubble_";
+            var qmlStringBegin = "import QtQuick 2.2; Image{width: 30; height:30; property var died: false; source: \"res/bubble_";
             
             for(; i < 8; i++){
                 var qmlString = qmlStringBegin + (i+1) + ".png\";}";

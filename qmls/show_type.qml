@@ -17,11 +17,12 @@ Rectangle {
     signal kkkk(int c);
 
     Component.onCompleted:{
+
         console.log("%1 visual children:".arg(children.length));
         for(var i = 0; i < children.length; i++){
             console.log(children[i]);
         }
-    /*
+    /*    
         var name = "Zhang San Feng";
         console.log(typeof name);
         console.log(typeof 60);
@@ -143,12 +144,12 @@ console.log(str.charCodeAt(1));
         console.log(Math.ceil(5.3));
         */
         
-        /*
+        
         var d = new Date();
         console.log(d.toString());
         console.log(d.getFullYear(), "-", d.getMonth(), "-", d.getDate());
         console.log("since 1970.1.1 - ", d.getTime());
-        */
+        
         
         //console.profile();
         //console.time("regexp");
