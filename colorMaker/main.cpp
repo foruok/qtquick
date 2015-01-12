@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     //qmlRegisterType<ColorMaker>("an.qt.ColorMaker", 1, 0, "ColorMaker");
 
     QQuickView viewer;
+    QObject::connect(viewer.engine(), SIGNAL(quit()), &app, SLOT(quit()));  
     viewer.setResizeMode(QQuickView::SizeRootObjectToView);
     viewer.rootContext()->setContextProperty("colorMaker", new ColorMaker);
     viewer.setSource(QUrl("qrc:///main.qml"));

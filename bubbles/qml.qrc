@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>bubble_1.png</file>
+    </qresource>
+</RCC>

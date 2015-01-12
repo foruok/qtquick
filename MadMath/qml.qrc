@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>res/madmath_36.png</file>
+        <file>res/right_selected.png</file>
+        <file>res/wrong_normal.png</file>
+        <file>res/wrong_selected.png</file>
+        <file>ImageButton.qml</file>
+        <file>res/right_normal.png</file>
+        <file>madmath_zh_cn.qm</file>
+    </qresource>
+</RCC>
